@@ -5,12 +5,12 @@ from display import Display
 keyboard = Keyboard()
 display = Display(keyboard_instance=keyboard)
 
-
 def game():
     pygame.init()
     running = True
     keyboard.screen.fill('lightseagreen')
     keyboard.create_keys()
+    display.get_word()
     display.create_lines()
     print(display.word_list)
     while running:
