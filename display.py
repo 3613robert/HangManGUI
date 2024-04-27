@@ -18,6 +18,8 @@ class Display:
                                pygame.image.load('images/hangman5.png'),
                                pygame.image.load('images/hangman6.png'),
                                pygame.image.load('images/hangman7.png')]
+        self.score = 0
+        self.highscore = 0
 
     def get_word(self):
         data = pd.read_csv('words.csv', header=None)
@@ -70,6 +72,7 @@ class Display:
             continue_text = continue_font.render("Press y to play again", True, 'red')
             self.keyboard_instance.screen.blit(text, (100, 175))
             self.keyboard_instance.screen.blit(continue_text, (60, 75))
+            self.score = 0
 
     def check_win(self):
         if self.correct_guesses == len(self.word_list):
@@ -80,3 +83,19 @@ class Display:
             self.keyboard_instance.screen.blit(text, (100, 175))
             self.keyboard_instance.screen.blit(continue_text, (60, 75))
             return True
+
+    def display_score(self):
+        font = pygame.font.SysFont("Courier", 24, bold=True)
+        score_text = font.render(f'Score:{self.score}', True, 'lightskyblue2')
+        self.keyboard_instance.screen.blit(score_text, (10, 25))
+
+    def display_highscore(self):
+        with open('highscore.txt', 'r') as data:
+            highscore = data.read()
+            self.highscore = int(highscore)
+        if self.score > self.highscore:
+            with open('highscore.txt', 'w') as data:
+                data.write(str(self.score))
+        font = pygame.font.SysFont("Courier", 24, bold=True)
+        highscore_text = font.render(f'Highscore:{self.highscore}', True, 'lightskyblue2')
+        self.keyboard_instance.screen.blit(highscore_text, (10, 50))

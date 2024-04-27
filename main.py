@@ -12,6 +12,8 @@ def game():
     keyboard.create_keys()
     display.get_word()
     display.create_lines()
+    display.display_score()
+    display.display_highscore()
     print(display.word_list)
     while running:
         for event in pygame.event.get():
@@ -27,12 +29,15 @@ def game():
                         display.check_win()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_y:
+                    if display.check_win():
+                        display.score += 1
                     display.line_list = []
                     display.word_list = []
                     display.guessed_letter = []
                     display.correct_guesses = 0
                     display.wrong_guesses = 0
                     game()
+
 # flip() the display to put your work on screen
         pygame.display.flip()
 
